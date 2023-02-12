@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+    <title>Movie Watch List</title>
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <header>
+                <h2>My Watchlist</h2>
+                <nav>
+                    <button class="nav-button" id="watchlist-page-nav">Search for movies</button>
+                </nav>
+            </header>
+    
+            <main class="main-content">
+                <div class="placeholder-container placeholder-watchlist" id="placeholder-container-watchlist">
+                    <span class="start-exploring-text" id="watchlist-text">Your watchlist is looking a little empty...</span>
+                    <button class="go-to-movies-btn" id="go-to-movies-btn">
+                        <span><img class="add-icon" alt="add-icon" src="images/icon_add.png"></span>
+                        <span>Let's add some movies</span>
+                    </button>
+                </div>
+                <div class="movie-feed-container" id="watchlist-feed-container">
+                    <!-- movies render here -->
+                </div>
+            </main>
+        </div>
+    </div>
+<script src="watchlist.js" type="module"></script>
+</body>
+</html>

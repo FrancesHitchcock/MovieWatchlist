@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+    <title>Movie Watch List</title>
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <header>
+                <h2>Find your film</h2>
+                <nav>
+                    <button class="nav-button" id="index-page-nav">My Watchlist</button>
+                </nav>
+                <form class="search-bar" id="search-form">
+                    <span class="search-icon-container"><img class="search-icon" src="./images/icon_search.png"></span>
+                    <input class="user-input" type="text" id="movie-title-input" placeholder="Search for a movie" aria-label="Search for a movie" autocomplete="off" autofocus>
+                    <button class="search-btn">Search</button>
+                </form>
+            </header>
+    
+            <main class="main-content">
+                <div class="placeholder-container placeholder-index" id="placeholder-container-index">
+                    <img src="images/icon_exploring.png" alt="">
+                    <span class="start-exploring-text" id="start-exploring-text">Start exploring</span>
+                </div>
+                <div class="movie-feed-container" id="movie-feed-container">
+                    <!-- movies render here -->
+                </div>
+            </main>
+        </div>
+    </div>
+<script src="index.js" type="module"></script>
+</body>
+</html>
