@@ -82,7 +82,7 @@ async function getSearchResults(e){
         movieFeedContainer.classList.add("hidden")
         placeholderContainerIndex.innerHTML = '<img class="loading-gif" src="images/loading.gif" >'
 
-        const response = await fetch(`http://www.omdbapi.com/?s=${movieTitle}&apikey=8eeeb0ec`)
+        const response = await fetch(`https://www.omdbapi.com/?s=${movieTitle}&apikey=8eeeb0ec`)
         const data = await response.json()
 
         const moviesList = data.Search
@@ -103,7 +103,7 @@ async function getSearchResults(e){
 }
 
 async function getEachMovie(imdbId){
-    const response = await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=8eeeb0ec`)
+    const response = await fetch(`https://www.omdbapi.com/?i=${imdbId}&apikey=8eeeb0ec`)
     const data = await response.json()
 
     moviesArray.push({
