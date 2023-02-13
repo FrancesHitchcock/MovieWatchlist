@@ -4,10 +4,6 @@ import { getMoviesHtml, resizePlotElement, lineClampPlotText, handleReadMoreElem
 const watchlistData = JSON.parse(localStorage.getItem("watchlistArray"))
 const sessionMovies = JSON.parse(sessionStorage.getItem("current movies"))
 
-// localStorage.clear()   
-
-let searchButtonEnabled = false
-
 let imdbIdArray = []
 let moviesArray = []
 let watchlistArray = []
@@ -63,8 +59,10 @@ window.addEventListener("resize", () => {
 
 // index page functions
 
-async function getSearchResults(e){
+async function getSearchResults(e){ 
     e.preventDefault()
+
+    sessionStorage.setItem("search term", JSON.stringify(document.getElementById("movie-title-input").value))
 
     imdbIdArray = []
     moviesArray = []
@@ -72,16 +70,19 @@ async function getSearchResults(e){
     const movieTitleInput = document.getElementById("movie-title-input")
     const movieTitle = movieTitleInput.value
 
-    if(movieTitle !== ""){
-        searchButtonEnabled = true
+    if(movieTitle === ""){
+        placeholderContainerIndex.innerHTML = `<img src="images/icon_exploring.png" alt="">
+        <span class="start-exploring-text" id="start-exploring-text">Start exploring</span>`
+        placeholderContainerIndex.classList.remove("hidden")
+        movieFeedContainer.classList.add("hidden")
     }
 
-    if(searchButtonEnabled){
+    else{
         placeholderContainerIndex.classList.remove("hidden")
         movieFeedContainer.classList.add("hidden")
         placeholderContainerIndex.innerHTML = '<img class="loading-gif" src="images/loading.gif" >'
 
-        const response = await fetch(`https://www.omdbapi.com/?s=${movieTitle}&apikey=8eeeb0ec`)
+        const response = await fetch(`http://www.omdbapi.com/?s=${movieTitle}&apikey=8eeeb0ec`)
         const data = await response.json()
 
         const moviesList = data.Search
@@ -91,19 +92,18 @@ async function getSearchResults(e){
                 imdbIdArray.push(movie.imdbID)
             })
 
-            imdbIdArray.forEach(imbdId => {
-                getEachMovie(imbdId)
+            imdbIdArray.forEach(imdbId => {
+                getEachMovie(imdbId)
             })
         }
         else{
             placeholderContainerIndex.textContent = "Unable to find what you are looking for. Please try again."
         }
     }
-    searchButtonEnabled = false
 }
 
-async function getEachMovie(imbdId){
-    const response = await fetch(`https://www.omdbapi.com/?i=${imbdId}&apikey=8eeeb0ec`)
+async function getEachMovie(imdbId){
+    const response = await fetch(`http://www.omdbapi.com/?i=${imdbId}&apikey=8eeeb0ec`)
     const data = await response.json()
 
     moviesArray.push({
@@ -122,9 +122,23 @@ async function getEachMovie(imbdId){
 }
 
 function renderMovies(){
+    const searchTermFromStorage = JSON.parse(sessionStorage.getItem("search term"))
+    if(searchTermFromStorage){
+        document.getElementById("movie-title-input").value = searchTermFromStorage
+    }
+
     placeholderContainerIndex.classList.add("hidden")
     movieFeedContainer.classList.remove("hidden")
     movieFeedContainer.innerHTML = getMoviesHtml(moviesArray, "icon_add.png", "add")
+
+    moviesArray.forEach(searchMovie => {
+        const arr = watchlistArray.filter(watchlistMovie => {
+            return watchlistMovie.imdbId === searchMovie.imdbId
+        })
+        if(arr.length > 0){
+            document.getElementById(`watchlist-${searchMovie.imdbId}`).textContent = "Added"
+        }
+    })
     
     handleReadMoreElement(moviesArray)
 }
@@ -140,9 +154,6 @@ function addToWatchlist(id){
 
     if(matchingMovieArray.length === 0){
         document.getElementById(`watchlist-${id}`).textContent = "Added"
-        setTimeout(() => {
-            document.getElementById(`watchlist-${id}`).textContent = "Watchlist"
-        }, 1000)
         watchlistArray.unshift(movieToWatch)
 
         localStorage.setItem("watchlistArray", JSON.stringify(watchlistArray))

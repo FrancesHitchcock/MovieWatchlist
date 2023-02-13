@@ -40,3 +40,7 @@ The requirements of the project were as follows:
 
 Frances Hitchcock, 12 February 2023
 
+Following feedback from the Scrimba Community on Discord the UX was improved by adding functionality to index.js so that the text of the watchlist button for each movie reflects whether the movie is included in the watchlist whenever the search list is rendered.
+
+Frances Hitchcock, 13 February 2023
+
